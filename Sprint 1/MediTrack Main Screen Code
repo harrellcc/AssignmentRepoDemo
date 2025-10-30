@@ -17,9 +17,9 @@ def login():
     username ="abc"
     password = "123"
     if userEntry.get() == username and passEntry.get() == password:
-        messagebox.showinfo(title = "Logged in", message= "Successfully logged in")
+        messagebox.showinfo(title = "Logged in", message= "Successfully logged in!")
     else:
-        messagebox.showinfo(title = "Login Failed", message= "Couldn't log in")
+        messagebox.showinfo(title = "Login Failed", message= "Invalid Username or Password")
 
 #def signUp():
     #new user
