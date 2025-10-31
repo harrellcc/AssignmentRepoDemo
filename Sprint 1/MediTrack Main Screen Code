@@ -9,29 +9,70 @@ mainWindow.geometry("350x450")
 mainWindow.configure(bg = '#F0F0F0')
 font1 = tkFont.Font(family = "Arial", size = 12, weight = tkFont.NORMAL)
 
+#Dashboard Window configurations
+dashboard = tk.Tk()
+dashboard.title("MediTrack dashboard")
+dashboard.geometry("350x450")
+dashboard.configure(bg = '#F0F0F0')
+dashboard.withdraw()
+
+#Sign-in Window
+signIn = tk.Tk()
+signIn.title("Create new User")
+signIn.geometry("350x450")
+signIn.configure(bg = '#F0F0F0')
+signIn.withdraw()
+
 label = tk.Label(mainWindow, text = "MediTrack", bg= "#F5D5F7", font = font1)
 label.place(x= 125,y=0)
 
+
 def login():
-    print("Hello")
-    username ="abc"
+    username = "hello"
     password = "123"
     if userEntry.get() == username and passEntry.get() == password:
+        
         messagebox.showinfo(title = "Logged in", message= "Successfully logged in!")
+        dashboard.deiconify()
+        mainWindow.withdraw()
+
+        
     else:
         messagebox.showinfo(title = "Login Failed", message= "Invalid Username or Password")
 
-#def signUp():
-    #new user
-    #make pass
-
-#widgets
+def signUp():
+    
+    mainWindow.withdraw()
+    signIn.deiconify()
+    
+    username = signUserEntry
+    password = signPassEntry
+    
+    if not userEntry.get() == username and not passEntry.get() == password:
+        messagebox.showinfo(title = "User created", message = "Redirecting back to login")
+        mainWindow.deiconify()
+        
+    else:
+        messagebox.showinfo(title = "User already exists", message = "Sign up failed, username already exists")
+        
+#widgets main
 userLabel = tk.Label(mainWindow, text = "Username", bg = "#F5D5F7", font = font1)
 passLabel = tk.Label(mainWindow, text = "Password", bg = "#F5D5F7", font = font1)
 userEntry = tk.Entry(mainWindow)
 passEntry = tk.Entry(mainWindow, show = "*")
 loginButton = tk.Button(mainWindow, text = "Login", bg = "#F5D5F7", font = font1, command = login)
-signUpButton = tk.Button(mainWindow, text = "Sign up", bg = "#F5D5F7", font = font1)
+signUpButton = tk.Button(mainWindow, text = "Sign up", bg = "#F5D5F7", font = font1, command = signUp)
+
+#widgets sign-in
+signUserEntryL = tk.Label(signIn, text = "Enter Username", bg = "#F5D5F7", font = font1)
+signPassEntryL = tk.Label(signIn, text = "Enter Password", bg = "#F5D5F7", font = font1)
+passRentryL = tk.Label(signIn, text = "Confirm Password", bg = "#F5D5F7", font = font1)
+signUserEntry = tk.Entry(signIn)
+signPassEntry = tk.Entry(signIn)
+passRentry = tk.Entry(signIn)
+
+#widgets dashboard
+dashboardInput = tk.Entry(mainWindow)
 
 #positions for labels and buttons
 loginButton.place(x = 125, y = 100)
@@ -40,7 +81,12 @@ userLabel.place(x=50, y=150)
 userEntry.place(x=130 , y=150)
 passLabel.place(x=50, y=190)
 passEntry.place(x=130, y= 190)
+signUserEntry.place(x=195, y= 150)
+signPassEntry.place(x=195, y= 190)
+passRentry.place(x=195,y=230)
+signUserEntryL.place(x=30, y=150) 
+signPassEntryL.place(x=30, y=190)
+passRentryL.place(x=30, y=230)
+dashboardInput.place(x=130, y=150)
     
-
 mainWindow.mainloop()
-
