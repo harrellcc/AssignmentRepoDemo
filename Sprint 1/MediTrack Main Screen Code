@@ -26,10 +26,11 @@ signIn.withdraw()
 label = tk.Label(mainWindow, text = "MediTrack", bg= "#F5D5F7", font = font1)
 label.place(x= 125,y=0)
 
+users = {}
 
 def login():
-    username = "hello"
-    password = "123"
+    username = tk.Entry(userEntry)
+    password = tk.Entry(passEntry)
     if userEntry.get() == username and passEntry.get() == password:
         
         messagebox.showinfo(title = "Logged in", message= "Successfully logged in!")
@@ -39,6 +40,8 @@ def login():
         
     else:
         messagebox.showinfo(title = "Login Failed", message= "Invalid Username or Password")
+        
+#def save():
 
 def signUp():
     
@@ -50,7 +53,10 @@ def signUp():
     
     if not userEntry.get() == username and not passEntry.get() == password:
         messagebox.showinfo(title = "User created", message = "Redirecting back to login")
+        
+        
         mainWindow.deiconify()
+        signIn.withdraw()
         
     else:
         messagebox.showinfo(title = "User already exists", message = "Sign up failed, username already exists")
@@ -70,9 +76,12 @@ passRentryL = tk.Label(signIn, text = "Confirm Password", bg = "#F5D5F7", font =
 signUserEntry = tk.Entry(signIn)
 signPassEntry = tk.Entry(signIn)
 passRentry = tk.Entry(signIn)
+createUser = tk.Button(signIn, text = "Create User", bg = "#F5D5F7", font = font1)
+
 
 #widgets dashboard
 dashboardInput = tk.Entry(mainWindow)
+
 
 #positions for labels and buttons
 loginButton.place(x = 125, y = 100)
@@ -88,5 +97,8 @@ signUserEntryL.place(x=30, y=150)
 signPassEntryL.place(x=30, y=190)
 passRentryL.place(x=30, y=230)
 dashboardInput.place(x=130, y=150)
+createUser.place(x = 130, y= 300)
     
+
 mainWindow.mainloop()
+
