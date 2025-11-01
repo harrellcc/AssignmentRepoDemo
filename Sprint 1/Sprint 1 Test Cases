@@ -1,0 +1,83 @@
+Use Case 1 - Meditrack Login/Sign-in Page
+Test Case ID
+TC01 - User attempts to login
+Test Objective
+The User will log into meditracker and be shown their dashboard
+Preconditions
+User must have a pre-existing username and password
+Test steps
+User opens the app
+User inputs their username
+ User inputs their password
+User presses login
+Test ends
+Input Values
+Username- #####
+Password- #####
+Expected results
+“Successfully logged in” will be displayed,
+User will be redirected to a screen displaying an entry to input medications
+
+
+
+Test Case ID
+TC02 - New user attempts to create an account
+Test Objective
+The user will attempt to create a new account
+Preconditions
+A supported browser is being used
+Test steps
+User selects ‘Create New Account’
+In the ‘E-mail or Phone Number’ field user enters their email or phone number
+User creates a username in the ‘Username’ field
+User creates a password in the ‘Create Password’ field
+User re-enters password in the ‘Confirm Password’ field
+Click the ‘Create User’ button
+Input Values
+Email :    #####
+Password : #####
+Re-enter Password : #####
+Expected results
+User is taken to the login page and “Account Created!” is displayed
+
+
+
+Test Case ID
+TC03 - User’s login fails
+Test Objective
+If an invalid username or password is inputted, the login process should fail.
+Preconditions
+The entered username and/or password are not registered in the system
+Test steps
+User inputs their username in the ‘Username’ field
+User inputs their password in the ‘Password’ field
+Click ‘login’
+Input Values
+Username : #####
+Password : #####
+Expected results
+The login process will fail, and “Invalid Username or Password” will be displayed
+
+
+
+Test Case ID
+TC04 - User’s sign in attempt fails/ account already exists 
+Test Objective
+Ensure the system prevents users from creating an account that already exists.
+Preconditions
+An account must already be made with a username and password
+Test steps
+User opens the Meditrack sign-up page.
+User enters an existing email address or phone number in the “Email or Phone Number” field.
+User enters a username already associated with another account
+User creates and confirms a password
+User clicks the “Create User” button to complete registration.
+Input Values
+Email: #### (already registered)
+Username: #### (already registered)
+Password: #####
+Confirm Password: #####
+Expected results
+The system displays an error message such as “Account with this user already exists.“ The user remains on the sign-up page, and no new account is created. 
+
+
