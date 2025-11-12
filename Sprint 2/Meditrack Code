@@ -1,0 +1,109 @@
+import tkinter as tk
+import tkinter.font as tkFont
+from tkinter import messagebox 
+
+users = {"sample":"123"}
+
+#Main window configurations
+mainWindow = tk.Tk()
+mainWindow.title("MediTrack Login form")
+mainWindow.geometry("350x450")
+mainWindow.configure(bg = '#F0F0F0')
+font1 = tkFont.Font(family = "Arial", size = 12, weight = tkFont.NORMAL)
+
+#Dashboard Window configurations
+dashboard = tk.Toplevel(mainWindow)
+dashboard.title("MediTrack dashboard")
+dashboard.geometry("350x450")
+dashboard.configure(bg = '#F0F0F0')
+dashboard.withdraw()
+
+#Sign-in Window
+signIn = tk.Toplevel(mainWindow)
+signIn.title("Create new User")
+signIn.geometry("350x450")
+signIn.configure(bg = '#F0F0F0')
+signIn.withdraw()
+
+label = tk.Label(mainWindow, text = "MediTrack", bg= "#F5D5F7", font = font1)
+label.place(x= 125,y=0)
+
+def login():
+    username = userEntry.get().strip()
+    password = passEntry.get().strip()
+    print("attempted login:", username, password)
+    
+    if username in users and users[username] == password:
+        messagebox.showinfo(title = "Logged in", message= "Successfully logged in!")
+        dashboard.deiconify()
+        mainWindow.withdraw()
+
+    else:
+        messagebox.showinfo(title = "Login Failed", message= "Invalid Username or Password")
+        
+def signUp():
+    mainWindow.withdraw()
+    signIn.deiconify()
+    
+def createUser():   
+    username = signUserEntry.get().strip()
+    password = signPassEntry.get().strip()
+    confirmPass = passRentry.get().strip()
+    
+    if username in users:
+        messagebox.showinfo(title = "Sign up failed", message = "Account with this user already exists")
+        
+    elif password != confirmPass:
+         messagebox.showinfo(title = "Invalid Password", message = "Passwords don't match")
+         
+    else:
+        users[username] = password
+        print(users)
+        messagebox.showinfo(title = "User created", message = "Redirecting back to login")
+        signIn.withdraw()
+        mainWindow.deiconify()
+        
+#widgets main
+userLabel = tk.Label(mainWindow, text = "Username", bg = "#F5D5F7", font = font1)
+passLabel = tk.Label(mainWindow, text = "Password", bg = "#F5D5F7", font = font1)
+userEntry = tk.Entry(mainWindow)
+passEntry = tk.Entry(mainWindow, show = "*")
+loginButton = tk.Button(mainWindow, text = "Login", bg = "#F5D5F7", font = font1, command = login)
+signUpButton = tk.Button(mainWindow, text = "Sign up", bg = "#F5D5F7", font = font1, command = signUp)
+
+#widgets sign-in
+signUserEntryL = tk.Label(signIn, text = "Enter Username", bg = "#F5D5F7", font = font1)
+signPassEntryL = tk.Label(signIn, text = "Enter Password", bg = "#F5D5F7", font = font1)
+passRentryL = tk.Label(signIn, text = "Confirm Password", bg = "#F5D5F7", font = font1)
+signUserEntry = tk.Entry(signIn)
+signPassEntry = tk.Entry(signIn, show = "*")
+passRentry = tk.Entry(signIn,show = "*")
+createUserButton = tk.Button(signIn, text = "Create User", bg = "#F5D5F7", font = font1, command = createUser)
+
+#widgets dashboard
+dashboardInput = tk.Entry(dashboard)
+dashboardInputL = passRentryL = tk.Label(dashboard, text = "Input Medications", bg = "#F5D5F7", font = font1)
+
+
+#positions for labels and buttons
+#login
+loginButton.place(x = 125, y = 100)
+signUpButton.place(x = 125, y = 250)
+userLabel.place(x=50, y=150)
+userEntry.place(x=130 , y=150)
+passLabel.place(x=50, y=190)
+passEntry.place(x=130, y= 190)
+#signin
+signUserEntry.place(x=195, y= 150)
+signPassEntry.place(x=195, y= 190)
+passRentry.place(x=195,y=230)
+signUserEntryL.place(x=30, y=150) 
+signPassEntryL.place(x=30, y=190)
+passRentryL.place(x=30, y=230)
+createUserButton.place(x = 130, y= 300)
+#dashboard
+dashboardInput.place(x=130, y=150)
+
+
+    
+mainWindow.mainloop()
