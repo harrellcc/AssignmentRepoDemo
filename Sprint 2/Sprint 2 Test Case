@@ -1,0 +1,20 @@
+TC04 - The user attempts to input an medication that is already registered
+  Test Objective: Verify that the MediTrack system prevents the user from adding a medication entry that has already been recorded
+  Preconditions: The dashboard window is active, at least one medication is on record
+  
+  Test Steps:
+     1. Navigate to the Dashboard window
+     2. In the medication input field, enter a medication record identical to an existing one
+     3. Click the save or record button
+     4. Observe the system's response
+  
+  Input Values:
+     - Medication Name
+     - Dosage
+     - Time
+     - Symptoms
+  
+  Expected Results: 
+     - A message box appears stating: "Medication already exists in the list"
+     - The duplicate record is not saved or added to the log
+     - The existing medication remains unchanged

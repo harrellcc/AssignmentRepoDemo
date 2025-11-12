@@ -1,4 +1,4 @@
-My groupmembers are:
+# Group Members
 - Caycee Harrell
 - Edwina Sesay
 - Malaya Conell
@@ -6,6 +6,6 @@ My groupmembers are:
 - Abigiya Yohannes
 - Aldaberto Gomez
 
-
------------------- Fill in some information about your project under this ------------------
+---
+## Descriptions
 The Project is an app that will allow users to input their medications, when it was taken, and any side effects or symptoms they may be experiencing.
