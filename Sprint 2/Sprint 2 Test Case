@@ -4,15 +4,16 @@ TC04 - The user attempts to input an medication that is already registered
   
   Test Steps:
      1. Navigate to the Dashboard window
-     2. In the medication input field, enter a medication record identical to an existing one
-     3. Click the save or record button
-     4. Observe the system's response
+     2. Press Add New Medication which navigates to a different page
+     3. In the medication input field, enter a medication record identical to an existing one
+     4. Click the save or record button
+     5. Observe the system's response
   
   Input Values:
      - Medication Name
      - Dosage
-     - Time
-     - Symptoms
+     - Time to Take
+     - Common Symptoms
   
   Expected Results: 
      - A message box appears stating: "Medication already exists in the list"
