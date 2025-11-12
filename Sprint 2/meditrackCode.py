@@ -2,7 +2,8 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import messagebox 
 
-users = {"sample":"123"}
+users = {"sample":"123"} #Predefined user for testing
+medications = [] #List to store medications
 
 #Main window configurations
 mainWindow = tk.Tk()
@@ -62,6 +63,18 @@ def createUser():
         messagebox.showinfo(title = "User created", message = "Redirecting back to login")
         signIn.withdraw()
         mainWindow.deiconify()
+
+#adds medication to the list if not already present
+def addMedication():
+    global medications
+    med_input = dashboardInput.get().strip()
+    if med_input in medications:
+        messagebox.showinfo(title = "Duplicate Entry", message = "Medication already exists in the list")
+    else:
+        medications.append(med_input)
+        messagebox.showinfo(title = "Medication Added", message = f"{med_input} added to your medications")
+
+    
         
 #widgets main
 userLabel = tk.Label(mainWindow, text = "Username", bg = "#F5D5F7", font = font1)
@@ -83,6 +96,7 @@ createUserButton = tk.Button(signIn, text = "Create User", bg = "#F5D5F7", font 
 #widgets dashboard
 dashboardInput = tk.Entry(dashboard)
 dashboardInputL = passRentryL = tk.Label(dashboard, text = "Input Medications", bg = "#F5D5F7", font = font1)
+addButton = tk.Button(dashboard, text="Add Medication", command=addMedication)
 
 
 #positions for labels and buttons
@@ -103,6 +117,7 @@ passRentryL.place(x=30, y=230)
 createUserButton.place(x = 130, y= 300)
 #dashboard
 dashboardInput.place(x=130, y=150)
+addButton.place(x=130, y=190)
 
 
     
