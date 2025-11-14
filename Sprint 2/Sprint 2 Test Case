@@ -15,6 +15,7 @@ Test case ends
 Input Values
 Medicine Name- “Ibuprofen”
 Dosage- “200 mg”
+Time Taken = “8:00 AM”
 Symptoms- “Nausea”
 Expected results
 The medicine will be added and will be shown on a list of medicines
@@ -33,9 +34,10 @@ The user input their medications
 Click the save or record button 
 Observe confirmation of successful entry or appearance of the saved data in the log/list 
 Input Values
-Medication name - "Ibuprofen"
-Dosage - "200 mg"
-Symptoms - "Nausea"
+Medication name - “ibuprofen
+Dosage - “200 mg”
+Time Taken = “8:00 AM”
+Symptoms - “Nausea”
 Expected results
 A message box appears stating”Medication record saved successfully: or the data appears in a displayed medication history/log
 The input field clears after saving 
@@ -84,6 +86,7 @@ Observe the system’s response
 Input Values
 Medication name - “Ibuprofen”
 Dosage - “200 mg”
+Time Taken = “8:00 AM”
 Symptoms - “Nausea”
 Expected results
 A message box appears stating: “This medication entry already exists.”
