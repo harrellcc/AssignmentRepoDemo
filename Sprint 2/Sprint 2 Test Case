@@ -1,21 +1,95 @@
+Use Case 2 - <<Meditrack Medication Management>>
+Test Case ID
+TC01 - The user adds a medication to their list of medicine
+Test Objective
+The user will add a medicine to their account through the dashboard
+Preconditions
+The user has already logged into their account
+Test steps
+The user logs in and goes to their dashboard
+The user presses Add Medicine
+The user inputs the Medicine
+The user presses add medicine
+A pop up displaying “Medicine has been added” will show, and the medicine will be displayed in a list on the dashboard
+Test case ends
+Input Values
+Medicine Name-###########
+Dosages-############
+Symptoms-###########
+Expected results
+The medicine will be added and will be shown on a list of medicines
+
+
+
+Test Case ID
+TC02 - The User records an administered dosage of a specific mediation, and symptoms
+Test Objective
+Verify that the user can record an administered dosage of a specific medication and note any symptoms after taking it.
+Preconditions
+The dashboard window is visible and active 
+Test steps
+Navigate to dashboard window 
+The user input their medications 
+Click the save or record button 
+Observe confirmation of successful entry or appearance of the saved data in the log/list 
+Input Values
+Medication name
+Dosage
+Time Taken 
+Symptoms 
+Expected results
+A message box appears stating”Medication record saved successfully: or the data appears in a displayed medication history/log
+The input field clears after saving 
+The saved record is stored in memory(or in a file/database, depending on implementation) 
+
+
+
+Test Case ID
+TC03 - The user removes a medication
+Test Objective
+To verify that the system correctly removes a medication from the user’s medication list and the display updates accordingly.
+Preconditions
+The user is logged into their account, the user has at least one medication on their list
+Test steps
+The user navigates to their Dashboard
+The user opens the Medication List
+The user selects a specific medication they wish to remove.
+The user clicks on the “Remove” or “Delete button” next to the medication
+The system will then prompt a confirmation message, “Are you sure you want to remove this medication?”
+The user confirms the deletion by clicking “Yes”?
+The system displays a success message (“Medication removed successfully”)
+The list refreshes to reflect the removal
+Input Values
+Medication to remove: “Ibuprofen 200 mg”
+Confirmation: Yes
+Expected results
+The selected medication is deleted from the list.
+The updated medication list no longer displays the removed medication.
+A success message appears confirming removal
+No errors or crashes during.
+
+
+
+Test Case ID
 TC04 - The user attempts to input an medication that is already registered
-  Test Objective: Verify that the MediTrack system prevents the user from adding a medication entry that has already been recorded
-  Preconditions: The dashboard window is active, at least one medication is on record
-  
-  Test Steps:
-     1. Navigate to the Dashboard window
-     2. Press Add New Medication which navigates to a different page
-     3. In the medication input field, enter a medication record identical to an existing one
-     4. Click the save or record button
-     5. Observe the system's response
-  
-  Input Values:
-     - Medication Name
-     - Dosage
-     - Time to Take
-     - Common Symptoms
-  
-  Expected Results: 
-     - A message box appears stating: "Medication already exists in the list"
-     - The duplicate record is not saved or added to the log
-     - The existing medication remains unchanged
+Test Objective
+Verify that the MediTrack system prevents the user from adding a medication entry that has already been recorded 
+Preconditions
+The dashboard window is active, at least one medication record 
+Test steps
+Navigate to the Dashboard window 
+In the medication input field, enter a medication record identical to an existing one
+Click the save or record button 
+Observe the system's response 
+Observe the system’s response 
+Input Values
+Medication name 
+Dosage 
+Time 
+Symptoms 
+Expected results
+A message box appears stating: “This is the medication entry already exists.”
+The duplicate record is not saved or added to the log
+The existing medication record remains unchanged  
+
+
