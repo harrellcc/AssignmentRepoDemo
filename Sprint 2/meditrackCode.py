@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
-from tkinter import messagebox 
+from tkinter import Listbox, messagebox 
 
 #User database
 users = {
@@ -148,6 +148,37 @@ def addMedication():
     messagebox.showinfo(title = "Medication Added", message = f"{med_input} is added to your medications!")
     print(f"[DEBUG] Current medications for {current_user}: {users[current_user]['medications']}")
 
+#function to remove selected medication from listbox and user data
+def onMedSelect(event):
+    selection = medListbox.curselection()
+
+    if selection and selection[0] != 0:
+        removeMedButton.place(x=350, y=390, width=200, height=30)
+    else:
+        removeMedButton.place_forget()
+    selection = medListbox.curselection()
+
+    medListbox.bind('<<ListboxSelect>>', onMedSelect)
+
+
+#function to confirm and remove medication
+def confirmRemoveMedication():
+    global current_user
+
+    selection = medListbox.curselection()
+
+    if not selection or selection[0] == 0:
+        return
+    
+    med_index = selection[0] - 1
+    med_name = users[current_user]["medications"][med_index]["name"]
+
+    answer = messagebox.askyesno(title="Confirm Removal", message=f"Are you sure you want to remove {med_name}?")
+    if answer:
+        users[current_user]["medications"].pop(med_index)
+        updateMedListbox()
+        removeMedButton.place_forget()
+
 
 def updateMedListbox():
     global current_user
@@ -204,6 +235,12 @@ scrollbar = tk.Scrollbar(dashboard, orient=tk.VERTICAL)
 medListbox.config(yscrollcommand=scrollbar.set)
 scrollbar.config(command=medListbox.yview)
 
+#remove medication button appears when a medication is selected
+removeMedButton = tk.Button(dashboard, text="Remove Selected Medication", font=font1, bg="#F5D5F7", command=confirmRemoveMedication)
+removeMedButton.place(x=350, y=390, width=200, height=30)
+removeMedButton.place_forget()
+
+
 '''TODO: Implement history window and its button
 historyButton = tk.Button(dashboard, text="View Medication History", bg="#F5D5F7", font=font1, command=lambda: [dashboard.withdraw(), historyWindow.deiconify()])'''
 
@@ -246,6 +283,33 @@ scrollbar.place(x=750, y=30, width=20, height=350)
 
 '''TODO: Implement history window layout'''
 
+def onMedSelect(event):
+    selection = medListbox.curselection()
+
+    if selection and selection[0] != 0:
+        removeMedButton.place(x=350, y=390, width=200, height=30)
+    else:
+        removeMedButton.place_forget()
+    selection = medListbox.curselection()
+
+medListbox.bind('<<ListboxSelect>>', onMedSelect)
+
+def confirmRemoveMedication():
+    global current_user
+
+    selection = medListbox.curselection()
+
+    if not selection or selection[0] == 0:
+        return
+    
+    med_index = selection[0] - 1
+    med_name = users[current_user]["medications"][med_index]["name"]
+
+    answer = messagebox.askyesno(title="Confirm Removal", message=f"Are you sure you want to remove {med_name}?")
+    if answer:
+        users[current_user]["medications"].pop(med_index)
+        updateMedListbox()
+        removeMedButton.place_forget()
 
     
 mainWindow.mainloop()
