@@ -13,9 +13,9 @@ The user presses add medicine
 A pop up displaying “Medicine has been added” will show, and the medicine will be displayed in a list on the dashboard
 Test case ends
 Input Values
-Medicine Name-###########
-Dosages-############
-Symptoms-###########
+Medicine Name- “Ibuprofen”
+Dosage- “200 mg”
+Symptoms- “Nausea”
 Expected results
 The medicine will be added and will be shown on a list of medicines
 
@@ -33,10 +33,9 @@ The user input their medications
 Click the save or record button 
 Observe confirmation of successful entry or appearance of the saved data in the log/list 
 Input Values
-Medication name
-Dosage
-Time Taken 
-Symptoms 
+Medication name - "Ibuprofen"
+Dosage - "200 mg"
+Symptoms - "Nausea"
 Expected results
 A message box appears stating”Medication record saved successfully: or the data appears in a displayed medication history/log
 The input field clears after saving 
@@ -83,12 +82,11 @@ Click the save or record button
 Observe the system's response 
 Observe the system’s response 
 Input Values
-Medication name 
-Dosage 
-Time 
-Symptoms 
+Medication name - “Ibuprofen”
+Dosage - “200 mg”
+Symptoms - “Nausea”
 Expected results
-A message box appears stating: “This is the medication entry already exists.”
+A message box appears stating: “This medication entry already exists.”
 The duplicate record is not saved or added to the log
 The existing medication record remains unchanged  
 
