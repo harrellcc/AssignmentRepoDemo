@@ -10,7 +10,7 @@ users = {
             {
                 "name": "Aspirin",
                 "dosage": "100mg",
-                "time": "08:00 AM",
+                "time": "8:00 AM",
                 "symptoms": "Headache"
             }
         ]
@@ -91,48 +91,77 @@ def createUser():
         signIn.withdraw()
         mainWindow.deiconify()
 
-def updateMedListbox():
-    global current_user
-    medListbox.delete(0, tk.END)
-    user_medications = users[current_user].get("medications", [])
-    for med in user_medications:
-        line = f"{med['name']} | {med['dosage']} | {med['time']} | {med['symptoms']}"
-        medListbox.insert(tk.END, line)
-
 #adds medication to the list if not already present
 def addMedication():
     global current_user
     user_medications = users[current_user].setdefault("medications", [])
 
     med_input = medicationEntry.get().strip()
-    dosage = dosageEntry.get().strip()
-    time = timeEntry.get().strip()
-    symptoms = symptomsEntry.get().strip()
+    dosage_input = dosageEntry.get().strip()
+    time_input = timeEntry.get().strip()
+    symptoms_input = symptomsEntry.get().strip()
 
-    #check the list for duplicate entries
-    if any(med['name'].lower() == med_input.lower() for med in user_medications):
+    #input validation
+    if not med_input:
+        messagebox.showinfo(title="Missing input", message="Medication cannot be empty!")
+        return
+    
+    if not dosage_input:
+        messagebox.showinfo(title="Missing input", message="Please enter the dosage")
+        return
+    
+    if not time_input:
+        messagebox.showinfo(title="Missing input", message="Please enter the time to take the medication")
+        return
+
+
+    med_norm = med_input.casefold()
+
+    #duplicate check
+    is_duplicate = any(med.get("name", "").strip().casefold() == med_norm
+                       for med in user_medications)
+    
+    if is_duplicate:
         messagebox.showinfo(title="Duplicate Entry", message=f"{med_input} is already in your medications!")
         return
 
     #add medication to the list
-    user_medications.append( {
+    new_med = ( {
         "name": med_input,
-        "dosage": dosage,
-        "time": time,
-        "symptoms": symptoms
+        "dosage": dosage_input,
+        "time": time_input,
+        "symptoms": symptoms_input
     })
+    user_medications.append(new_med)
+    users[current_user]["medications"] = user_medications
 
-    line= f"{med_input} | {dosage} | {time} | {symptoms}"
-    medListbox.insert(tk.END, line)
+    #refresh listbox
+    updateMedListbox()
 
-    #confirmation message
-    messagebox.showinfo(title = "Medication Added", message = f"{med_input} is added to your medications!")
-
-    #clear input fields
+    #clear entries
     medicationEntry.delete(0, tk.END)
     dosageEntry.delete(0, tk.END)
     timeEntry.delete(0, tk.END)
     symptomsEntry.delete(0, tk.END)
+
+    #confirmation message
+    messagebox.showinfo(title = "Medication Added", message = f"{med_input} is added to your medications!")
+    print(f"[DEBUG] Current medications for {current_user}: {users[current_user]['medications']}")
+
+
+def updateMedListbox():
+    global current_user
+    medListbox.delete(0, tk.END)
+
+    medListbox.insert(tk.END, "Name | Dose | Time | Symptoms")
+    medListbox.itemconfig(0, {'fg': 'white', 'bg': 'black'}) 
+
+    user_medications = users[current_user].get("medications", [])
+    for med in user_medications:
+        #if symptoms is empty, display "None"
+        symptoms_display = med.get("symptoms", "").strip() or "None"
+        line = f"{med['name']} | {med['dosage']} | {med['time']} | {symptoms_display}"
+        medListbox.insert(tk.END, line)
 
 
         
@@ -158,7 +187,7 @@ backButton = tk.Button(signIn, text="Go Back", bg="#F5D5F7", font=font1, command
 #Widgets dashboard:
 
 #Add Medication Button and Entries
-addMedButton = tk.Button(dashboard, text="Add New Medication", bg="#F5D5F7", font=font1, command=lambda: [dashboard.withdraw(), dashboard.deiconify()])
+addMedButton = tk.Button(dashboard, text="Add New Medication", bg="#F5D5F7", font=font1, command=addMedication)
 medicationEntry = tk.Entry(dashboard)
 medicationEntryL = tk.Label(dashboard, text = "Input Medications", bg = "#F5D5F7", font = font1)
 dosageEntry = tk.Entry(dashboard)
@@ -167,7 +196,6 @@ timeEntry = tk.Entry(dashboard)
 timeEntryL = tk.Label(dashboard, text = "Take at", bg = "#F5D5F7", font = font1)
 symptomsEntry = tk.Entry(dashboard)
 symptomsEntryL = tk.Label(dashboard, text = "Symptoms", bg = "#F5D5F7", font = font1)
-addButton = tk.Button(dashboard, text="Add Medication", command=addMedication)
 
 #Listbox and Scrollbar for medications
 medListbox = tk.Listbox(dashboard, font=font1)
