@@ -2,6 +2,18 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import Listbox, messagebox 
 
+import datetime
+
+def parse_time(t):
+    return datetime.datetime.strptime(t, "%I:%M %p").time()
+
+def seconds_until(t):
+    now = datetime.datetime.now()
+    target = datetime.datetime.combine(now.date(), t)
+    if target < now:
+        target += datetime.timedelta(days=1)
+    return (target - now).total_seconds()
+
 #User database
 users = {
     "sample": {
@@ -219,6 +231,8 @@ backButton = tk.Button(signIn, text="Go Back", bg="#F5D5F7", font=font1, command
 
 #Add Medication Button and Entries
 addMedButton = tk.Button(dashboard, text="Add New Medication", bg="#F5D5F7", font=font1, command=addMedication)
+setScheduleButton = tk.Button(dashboard, text="Set Schedule", bg="#F5D5F7", font=font1, command=lambda: openScheduler())
+setScheduleButton.place(x=20, y=280, width=260, height=30)
 medicationEntry = tk.Entry(dashboard)
 medicationEntryL = tk.Label(dashboard, text = "Input Medications", bg = "#F5D5F7", font = font1)
 dosageEntry = tk.Entry(dashboard)
@@ -310,6 +324,53 @@ def confirmRemoveMedication():
         users[current_user]["medications"].pop(med_index)
         updateMedListbox()
         removeMedButton.place_forget()
+
+
+def scheduleReminder(username, med):
+    t = parse_time(med["time"])
+    wait = int(seconds_until(t)) * 1000
+    
+    def notify():
+        popup = tk.Toplevel()
+        popup.title("MediTrack Reminder")
+        popup.geometry("300x200")
+        tk.Label(popup, text=f"Time to take {med['name']}!").pack(pady=10)
+        tk.Label(popup, text=f"Dosage: {med['dosage']}").pack()
+        
+        def taken():
+            popup.destroy()
+            scheduleReminder(username, med)
+        
+        tk.Button(popup, text="Taken", command=taken).pack(pady=20)
+
+    dashboard.after(wait, notify)
+
+def openScheduler():
+    global current_user
+    meds = users[current_user]["medications"]
+    if not meds:
+        messagebox.showinfo("Error", "You have no medications added.")
+        return
+
+    win = tk.Toplevel()
+    win.title("Set Schedule")
+    win.geometry("300x300")
+
+    lb = tk.Listbox(win)
+    for m in meds:
+        lb.insert(tk.END, m["name"])
+    lb.pack(pady=10)
+
+    def save():
+        idx = lb.curselection()
+        if not idx:
+            return
+        med = meds[idx[0]]
+        scheduleReminder(current_user, med)
+        win.destroy()
+        messagebox.showinfo("Saved", "Reminder scheduled.")
+
+    tk.Button(win, text="Save", command=save).pack(pady=15)
 
     
 mainWindow.mainloop()
