@@ -159,7 +159,6 @@ def addMedication():
     #clear entries
     medicationEntry.delete(0, tk.END)
     dosageEntry.delete(0, tk.END)
-    timeEntry.delete(0, tk.END)
     symptomsEntry.delete(0, tk.END)
 
     #confirmation message
@@ -282,11 +281,6 @@ def on_schedule_chosen(time_str, occurence, days):
     current_schedule["days"] = days
 
     #update time entry field
-    timeEntry.config(state="normal")
-    timeEntry.delete(0, tk.END)
-    timeEntry.insert(0, time_str)
-    timeEntry.config(state="readonly")
-
     print("[DEBUG] Selected schedule:", time_str, occurence, days)
 
 
@@ -397,16 +391,24 @@ backButton = tk.Button(signIn, text="Go Back", bg="#F5D5F7", font=font1, command
 
 # --- widgets dashboard window ---
 
-#Add Medication Button and Entries
-addMedButton = tk.Button(dashboard, text="Add New Medication", bg="#F5D5F7", font=font1, command=addMedication)
+#Entries
 medicationEntry = tk.Entry(dashboard)
 medicationEntryL = tk.Label(dashboard, text = "Input Medications", bg = "#F5D5F7", font = font1)
 dosageEntry = tk.Entry(dashboard)
 dosageEntryL = tk.Label(dashboard, text = "Dosage", bg = "#F5D5F7", font = font1)
-timeEntry = tk.Entry(dashboard, state="readonly")  
-timeEntryL = tk.Label(dashboard, text = "Take at", bg = "#F5D5F7", font = font1)
 symptomsEntry = tk.Entry(dashboard)
 symptomsEntryL = tk.Label(dashboard, text = "Symptoms", bg = "#F5D5F7", font = font1)
+
+#buttons
+scheduleButton = tk.Button(
+    dashboard,
+    text="Set Schedule",
+    bg="#F5D5F7",
+    font=font1,
+    command=lambda: open_scheduler(on_schedule_chosen)
+)
+
+addMedButton = tk.Button(dashboard, text="Add Medication", bg="#F5D5F7", font=font1, command=addMedication)
 
 #Listbox and Scrollbar for medications
 medListbox = tk.Listbox(dashboard, font=font1)
@@ -420,13 +422,6 @@ removeMedButton = tk.Button(dashboard, text="Remove Selected Medication", font=f
 removeMedButton.place(x=350, y=390, width=200, height=30)
 removeMedButton.place_forget()
 
-scheduleButton = tk.Button(
-    dashboard,
-    text="Set Schedule!",
-    bg="#F5D5F7",
-    font=font1,
-    command=lambda: open_scheduler(on_schedule_chosen)
-)
 
 
 '''TODO: Implement history window and its button
@@ -453,19 +448,16 @@ createUserButton.place(x = 130, y= 300)
 backButton.place(x=130, y=350)
 #dashboard
 medicationEntryL.place(x=20, y=30)
-medicationEntry.place(x=150, y=30, width=140)
+medicationEntry.place(x=155, y=30, width=140)
 
 dosageEntryL.place(x=20, y=80)
-dosageEntry.place(x=150, y=80, width=140)
+dosageEntry.place(x=155, y=80, width=140)
 
-timeEntryL.place(x=20, y=130)
-timeEntry.place(x=150, y=130, width=140)
-scheduleButton.place(x=300, y=130, width=100, height=24)
+symptomsEntryL.place(x=20, y=130)
+symptomsEntry.place(x=155, y=130, width=140)
 
-symptomsEntryL.place(x=20, y=180)
-symptomsEntry.place(x=150, y=180, width=140)
-
-addMedButton.place(x=20, y=230, width=260, height=30)
+scheduleButton.place(x=20, y=180, width=110, height=30)
+addMedButton.place(x=155, y=180, width=145, height=30)
 
 medListbox.place(x=350, y=30, width=400, height=350)
 scrollbar.place(x=750, y=30, width=20, height=350)
@@ -477,7 +469,7 @@ def onMedSelect(event):
     selection = medListbox.curselection()
 
     if selection and selection[0] != 0:
-        removeMedButton.place(x=350, y=390, width=200, height=30)
+        removeMedButton.place(x=350, y=390, width=215, height=30)
     else:
         removeMedButton.place_forget()
     selection = medListbox.curselection()
