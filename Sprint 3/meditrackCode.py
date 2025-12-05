@@ -264,13 +264,25 @@ def scheduleReminder(username, med):
         popup.title("Medication Reminder")
         popup.geometry("300x150")
         tk.Label(popup, text=f"Time to take {med['name']} ({med['dosage']})", font=font1).pack(pady=20)
-        tk.Button(popup, text="OK", command=popup.destroy).pack(pady=10)
-
-        scheduleReminder(username, med) #reschedule the reminder for the next day
+        
+        #function to delay the reminder popup
+        def waitButton():
+            popup.destroy()
+        
+            #delaying the reminder for 1 minute 
+            waitDelay = 60*1000
+            remindID = dashboard.after(waitDelay, showReminder)
+            reminders[key] = remindID
+            
+        def okButton():
+            popup.destroy()
+            scheduleReminder(username, med)
+            
+        tk.Button(popup, text="OK", command=okButton).pack(pady=10)
+        tk.Button(popup, text = "Wait (1min)", command = waitButton).pack(pady = 5)    
 
     remindID = dashboard.after(delay_ms, showReminder) #schedule the reminder
     reminders[key] = remindID #store the reminder ID
-
     print(f"[DEBUG] Scheduled reminder for {username} to take {med['name']} in {delay_ms/1000:.2f} seconds.")
 
 #callback function when schedule is chosen
