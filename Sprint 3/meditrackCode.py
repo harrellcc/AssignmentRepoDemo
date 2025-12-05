@@ -4,6 +4,18 @@ from tkinter import Listbox, messagebox
 from tkinter import ttk
 from datetime import datetime, timedelta
 
+import datetime
+
+def parse_time(t):
+    return datetime.datetime.strptime(t, "%I:%M %p").time()
+
+def seconds_until(t):
+    now = datetime.datetime.now()
+    target = datetime.datetime.combine(now.date(), t)
+    if target < now:
+        target += datetime.timedelta(days=1)
+    return (target - now).total_seconds()
+
 #User database
 users = {
     "sample": {
