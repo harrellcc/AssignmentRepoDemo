@@ -237,20 +237,19 @@ def seconds_until(time_str):
 
 
 
-#function to schedule reminders
+# function to schedule reminders (TC01 + TC02)
 def scheduleReminder(username, med):
-
-    #get time string and calculate delay
+    # get time string and calculate delay using YOUR helper
     time_str = med['time']
     delay_ms = seconds_until(time_str)
     if not delay_ms or delay_ms <= 0:
         print(f"[ERROR] Invalid time format for medication {med['name']}: {time_str}")
         return
-    
-    #unique key for each reminder
+
+    # unique key for each reminder (so we can cancel/reschedule correctly)
     key = (username, med['name'], time_str)
 
-    #cancel existing reminder if present
+    # cancel existing reminder if present
     if key in reminders:
         try:
             dashboard.after_cancel(reminders[key])
@@ -258,20 +257,50 @@ def scheduleReminder(username, med):
             pass
         reminders.pop(key, None)
 
-    #function to show reminder popup
-    def showReminder():
+    # function to show reminder popup
+    def notify():
         popup = tk.Toplevel(dashboard)
-        popup.title("Medication Reminder")
-        popup.geometry("300x150")
-        tk.Label(popup, text=f"Time to take {med['name']} ({med['dosage']})", font=font1).pack(pady=20)
-        tk.Button(popup, text="OK", command=popup.destroy).pack(pady=10)
+        popup.title("MediTrack Reminder")
+        popup.geometry("300x200")
 
-        scheduleReminder(username, med) #reschedule the reminder for the next day
+        # main text (like her code)
+        tk.Label(
+            popup,
+            text=f"Time to take {med['name']}!",
+            font=font1
+        ).pack(pady=10)
 
-    remindID = dashboard.after(delay_ms, showReminder) #schedule the reminder
-    reminders[key] = remindID #store the reminder ID
+        tk.Label(
+            popup,
+            text=f"Dosage: {med['dosage']}",
+            font=("Arial", 10)
+        ).pack()
+
+    # inner functions: taken / not taken (from her pattern)
+        def taken():
+            print(f"[DEBUG] {username} marked {med['name']} as TAKEN")
+            popup.destroy()
+            # schedule next dosage (same med, next day/time)
+            scheduleReminder(username, med)
+
+        def not_taken():
+            print(f"[DEBUG] {username} marked {med['name']} as NOT TAKEN")
+            popup.destroy()
+            # still schedule next dosage — app doesn’t skip future reminders
+            scheduleReminder(username, med)
+
+        # buttons for TC02
+        btn_frame = tk.Frame(popup)
+        btn_frame.pack(pady=20)
+
+        tk.Button(btn_frame, text="Taken", width=10, command=taken).pack(side="left", padx=5)
+        tk.Button(btn_frame, text="Not Taken", width=10, command=not_taken).pack(side="left", padx=5)
+
+    remindID = dashboard.after(delay_ms, notify)
+    reminders[key] = remindID
 
     print(f"[DEBUG] Scheduled reminder for {username} to take {med['name']} in {delay_ms/1000:.2f} seconds.")
+
 
 #callback function when schedule is chosen
 def on_schedule_chosen(time_str, occurence, days):
