@@ -260,45 +260,28 @@ def scheduleReminder(username, med):
     # function to show reminder popup
     def notify():
         popup = tk.Toplevel(dashboard)
-        popup.title("MediTrack Reminder")
-        popup.geometry("300x200")
-
-        # main text (like her code)
-        tk.Label(
-            popup,
-            text=f"Time to take {med['name']}!",
-            font=font1
-        ).pack(pady=10)
-
-        tk.Label(
-            popup,
-            text=f"Dosage: {med['dosage']}",
-            font=("Arial", 10)
-        ).pack()
-
-    # inner functions: taken / not taken (from her pattern)
-        def taken():
-            print(f"[DEBUG] {username} marked {med['name']} as TAKEN")
+        popup.title("Medication Reminder")
+        popup.geometry("300x150")
+        tk.Label(popup, text=f"Time to take {med['name']} ({med['dosage']})", font=font1).pack(pady=20)
+        
+        #function to delay the reminder popup
+        def waitButton():
             popup.destroy()
-            # schedule next dosage (same med, next day/time)
-            scheduleReminder(username, med)
-
-        def not_taken():
-            print(f"[DEBUG] {username} marked {med['name']} as NOT TAKEN")
+        
+            #delaying the reminder for 1 minute 
+            waitDelay = 60*1000
+            remindID = dashboard.after(waitDelay, showReminder)
+            reminders[key] = remindID
+            
+        def okButton():
             popup.destroy()
-            # still schedule next dosage — app doesn’t skip future reminders
             scheduleReminder(username, med)
+            
+        tk.Button(popup, text="OK", command=okButton).pack(pady=10)
+        tk.Button(popup, text = "Wait (1min)", command = waitButton).pack(pady = 5)    
 
-        # buttons for TC02
-        btn_frame = tk.Frame(popup)
-        btn_frame.pack(pady=20)
-
-        tk.Button(btn_frame, text="Taken", width=10, command=taken).pack(side="left", padx=5)
-        tk.Button(btn_frame, text="Not Taken", width=10, command=not_taken).pack(side="left", padx=5)
-
-    remindID = dashboard.after(delay_ms, notify)
-    reminders[key] = remindID
-
+    remindID = dashboard.after(delay_ms, showReminder) #schedule the reminder
+    reminders[key] = remindID #store the reminder ID
     print(f"[DEBUG] Scheduled reminder for {username} to take {med['name']} in {delay_ms/1000:.2f} seconds.")
 
 
