@@ -1,0 +1,163 @@
+Use Case 3- <<Time-Based Notifications>>
+Test Case ID
+TC01 - Notifications Pop up for the specified dosages
+Test Objective
+The notification for medication use will pop up for the user at the designated time
+Preconditions
+User’s account exists
+User is logged in successfully
+At least one medication with a name, dosage, and scheduled time is already added
+Test steps
+Login to the app
+Add a new medication
+Open the scheduling window
+Select a time using the hour, minute, and AM/PM dropdowns
+Select an occurrence value (example: Daily)
+(Optional) Select specific days of the week if using custom days
+Save the schedule so the time field is auto-filled
+Save the medication
+Wait for the scheduled time
+Close the pop-up notification
+Input Values
+Username: sample, Password: 123
+Name: TestMed, Dosage: 10mg, Scheduling window values: Time 1–2 minutes from current time, Occurrence: Daily, symptoms: none
+N/A
+Click OK
+Expected results
+dashboard opens, user medications load
+Scheduling window opens and accepts user selections
+Selected time appears in the medication time field
+Medication is added to the listbox and confirmation message shows
+A pop-up appears at the scheduled time displaying: “Time to take TestMed (10mg)”
+Pop-up closes
+
+
+
+Test Case ID
+TC02 -  Confirmation that dosage was taken
+Test Objective
+The user will be able to press taken or not taken. 
+Preconditions
+The user has received a pop-up for the medication they need to take
+Test steps
+The user receives a pop-up alert for medication
+The User presses yes
+The pop-up window closes
+Test case ends
+Input Values
+Click Yes
+Expected results
+The pop-up from the notification will disappear and will not reappear until the next dosage.
+
+
+
+Test Case ID
+TC03 - Overdue Notifications
+Test Objective
+If the user has pressed wait, the pop-up will return in a minute 
+Preconditions
+The user received a pop-up for the medication they needed to take
+Test steps
+The user receives a pop-up alert for the medication 
+The user selects wait
+The pop-up opens again after a minute and the user is prompted to press “Ok” or “Wait”  again.
+User waits for the reminder to pop up again
+
+The user presses “Ok”
+Test case ends.
+Input Values
+1. Input the Medication’s dosage and scheduled time
+
+2.Wait for the reminder to pop up
+
+3.Press “Wait”
+
+
+
+Expected results
+The pop-up window will reappear after the user selects “Wait” to the prompt:
+“Time to take MedA (5mg)”
+The user can then press Wait again, or press Ok.
+
+
+
+Test Case ID
+TC04 - Overlapping Dosage Handling
+Test Objective
+Ensure that when two or more medications have scheduled times that overlap (occur at the same minute), the app correctly displays multiple notifications without crashing, overlapping UI, or blocking the user from responding to each alert.
+Preconditions
+User’s account exists
+
+
+User is logged in successfully
+
+
+At least two medications are added with dosage times scheduled for the same minute
+
+
+Both medications have valid names, dosages, and times saved
+
+
+Test steps
+Login to the app
+
+
+Add Medication A
+
+
+Add Medication B
+
+
+Set both medications to notify within 1–2 minutes of the current time
+
+
+Wait for scheduled notification time
+
+
+Observe whether one or both pop-ups appear
+
+
+Press Yes or OK on the first pop-up
+
+
+Close the second pop-up after responding
+
+
+End test case
+Input Values
+Username: sample, Password: 123
+
+
+Medication A: Name: MedA, Dosage: 5mg, Time: 1–2 minutes from now
+
+
+Medication B: Name: MedB, Dosage: 20mg, Time: 1–2 minutes from now
+
+
+User clicks Yes (taken) or OK on both pop-ups
+
+
+Expected results
+Both medications appear in the listbox after being added
+
+
+Two separate pop-up notifications appear, one for each medication:
+
+
+“Time to take MedA (5mg)”
+
+
+“Time to take MedB (20mg)”
+
+
+Pop-ups do not overlap in a way that prevents interaction
+
+
+App does not freeze, delay, or prevent the user from closing each alert
+
+
+Once each notification is handled, no duplicate notification appears until the next scheduled dosage time
+
+
+
+
